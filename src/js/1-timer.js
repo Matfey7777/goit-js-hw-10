@@ -13,10 +13,10 @@ const refs = {
   seconds: document.querySelector('[data-seconds]'),
 };
 
-refs.startBtn.disabled = true;
-
 let userSelectedDate;
 let intervalId = null;
+
+refs.startBtn.disabled = true;
 
 const options = {
   enableTime: true,
@@ -29,7 +29,8 @@ const options = {
       return;
     }
 
-    if (selectedDates[0].getTime() < Date.now()) {
+    // Дата в прошлом ИЛИ точно сейчас — невалидна
+    if (selectedDates[0].getTime() <= Date.now()) {
       iziToast.error({
         message: 'Please choose a date in the future',
       });
@@ -43,7 +44,7 @@ const options = {
   },
 };
 
-flatpickr(refs.dateTime, options);
+flatpickr('#datetime-picker', options);
 
 refs.startBtn.addEventListener('click', onBtnClick);
 
